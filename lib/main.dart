@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 void main() => runApp(const MyApp());
 
@@ -51,6 +52,44 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
+  String equation = "0";
+  String result = "0";
+  String expression = "";
+
+  buttonPressed(String buttonText) {
+    setState(() {
+      if (buttonText == "AC") {
+        equation = "0";
+        result = "0";
+      } else if (buttonText == "⌫") {
+        equation = equation.substring(0, equation.length - 1);
+        if (equation == "") {
+          equation = "0";
+        }
+      } else if (buttonText == "=") {
+        expression = equation;
+        expression = expression.replaceAll('×', '*');
+        expression = expression.replaceAll('÷', '/');
+
+        try {
+          Parser p = Parser();
+          Expression exp = p.parse(expression);
+
+          ContextModel cm = ContextModel();
+          result = '${exp.evaluate(EvaluationType.REAL, cm)}';
+        } catch (e) {
+          result = "Error";
+        }
+      } else {
+        if (equation == "0") {
+          equation = buttonText;
+        } else {
+          equation = equation + buttonText;
+        }
+      }
+    });
+  }
+
   Widget myButton({color, text}) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
@@ -64,18 +103,17 @@ class _CalculatorState extends State<Calculator> {
         text.toString(),
         style: const TextStyle(fontSize: 30.0),
       ),
-      onPressed: () {},
+      onPressed: () => buttonPressed(text.toString()),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    print(AdaptiveTheme.of(context).mode);
-
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        centerTitle: true,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarBrightness: Theme.of(context).brightness,
         ),
@@ -126,14 +164,14 @@ class _CalculatorState extends State<Calculator> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            '1+1',
+                            equation,
                             style: Theme.of(context)
                                 .textTheme
                                 .displayMedium
                                 ?.copyWith(fontSize: 45.0),
                           ),
                           Text(
-                            '=0',
+                            result,
                             style: Theme.of(context)
                                 .textTheme
                                 .displayLarge
@@ -168,7 +206,7 @@ class _CalculatorState extends State<Calculator> {
                   myButton(color: Theme.of(context).primaryColor, text: 3),
                   myButton(color: Colors.blueGrey, text: '+'),
                   myButton(color: Theme.of(context).primaryColor, text: 0),
-                  myButton(color: Theme.of(context).primaryColor, text: '⋅'),
+                  myButton(color: Theme.of(context).primaryColor, text: '.'),
                   myButton(color: Theme.of(context).buttonColor, text: '⌫'),
                   myButton(color: Colors.redAccent, text: '='),
                 ],
