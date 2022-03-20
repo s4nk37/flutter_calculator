@@ -49,7 +49,7 @@ class _CalculatorState extends State<Calculator> {
     return Scaffold(
       backgroundColor: const Color(0xffe5e5e5),
       body: Container(
-        padding: EdgeInsets.fromLTRB(10.0, 35.0, 10.0, 10.0),
+        padding: const EdgeInsets.fromLTRB(10.0, 35.0, 10.0, 10.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -68,7 +68,7 @@ class _CalculatorState extends State<Calculator> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
+                        children: const [
                           Text(
                             '1+1',
                             style:
