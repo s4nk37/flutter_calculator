@@ -1,60 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_calculator/theme.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 
-// void main()=>MyApp();
-
-// class MyApp extends StatefulWidget {
-//
-//
-//   const MyApp({Key? key,this.savedThemeMode}) : super(key: key);
-//
-//   @override
-//   State<MyApp> createState() => _MyAppState();
-// }
-//
-// class _MyAppState extends State<MyApp> {
-//   @override
-//   Widget build(BuildContext context) {
-//     // return AnimatedSwitcher(
-//     //   duration: Duration(seconds: 1),
-//     //   child: MaterialApp(
-//     //     savedThemeMode: widget.savedThemeMode,
-//     //     debugShowCheckedModeBanner: false,
-//     //     themeMode: ThemeMode.dark,
-//     //     title: 'Calculator',
-//     //     home: const Calculator(),
-//     //   ),
-//     // );
-//     return AdaptiveTheme(
-//       light: ThemeData(
-//         brightness: Brightness.light,
-//         primarySwatch: Colors.red,
-//         accentColor: Colors.amber,
-//       ),
-//       dark: ThemeData(
-//         brightness: Brightness.dark,
-//         primarySwatch: Colors.red,
-//         accentColor: Colors.amber,
-//       ),
-//       initial: AdaptiveThemeMode.light,
-//       builder: (theme, darkTheme) => MaterialApp(
-//         debugShowCheckedModeBanner: false,
-//         title: 'Calculator',
-//         theme: theme,
-//         darkTheme: darkTheme,
-//         home: Calculator(),
-//       ),
-//     );
-//   }
-// }
-
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return AdaptiveTheme(
@@ -62,6 +13,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         primaryColor: Colors.greenAccent,
         backgroundColor: const Color(0xffe5e5e5),
+        buttonColor: Colors.black87,
         textTheme: const TextTheme(
           titleMedium: TextStyle(color: Colors.black87),
           displayMedium: TextStyle(color: Colors.black54),
@@ -72,6 +24,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         primaryColor: const Color(0xff2bbd7e),
         backgroundColor: const Color(0xff121212),
+        buttonColor: Colors.white24,
         textTheme: const TextTheme(
           titleMedium: TextStyle(color: Colors.white70),
           displayMedium: TextStyle(color: Colors.white54),
@@ -84,7 +37,7 @@ class MyApp extends StatelessWidget {
         title: 'Adaptive Theme Demo',
         theme: theme,
         darkTheme: darkTheme,
-        home: Calculator(),
+        home: const Calculator(),
       ),
     );
   }
@@ -109,7 +62,7 @@ class _CalculatorState extends State<Calculator> {
       ),
       child: Text(
         text.toString(),
-        style: TextStyle(fontSize: 30.0),
+        style: const TextStyle(fontSize: 30.0),
       ),
       onPressed: () {},
     );
@@ -117,6 +70,8 @@ class _CalculatorState extends State<Calculator> {
 
   @override
   Widget build(BuildContext context) {
+    print(AdaptiveTheme.of(context).mode);
+
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -127,13 +82,19 @@ class _CalculatorState extends State<Calculator> {
         elevation: 0.0,
         title: Text(
           'Calculator',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 20.0),
+          style:
+              Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 20.0),
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
             child: IconButton(
-              onPressed: () => AdaptiveTheme.of(context).toggleThemeMode(),
+              // onPressed: () => AdaptiveTheme.of(context).toggleThemeMode(),
+              onPressed: () =>
+                  (AdaptiveTheme.of(context).mode == AdaptiveThemeMode.light)
+                      ? (AdaptiveTheme.of(context).setDark())
+                      : (AdaptiveTheme.of(context).setLight()),
               icon: Icon(
                 Icons.wb_sunny,
                 color: Theme.of(context).textTheme.titleMedium?.color,
@@ -150,7 +111,7 @@ class _CalculatorState extends State<Calculator> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-                flex: 5,
+                flex: 4,
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Stack(
@@ -166,11 +127,18 @@ class _CalculatorState extends State<Calculator> {
                         children: [
                           Text(
                             '1+1',
-                            style: Theme.of(context).textTheme.displayMedium?.copyWith(fontSize: 45.0),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayMedium
+                                ?.copyWith(fontSize: 45.0),
                           ),
                           Text(
                             '=0',
-                            style: Theme.of(context).textTheme.displayLarge?.copyWith(fontSize: 65.0),),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge
+                                ?.copyWith(fontSize: 65.0),
+                          ),
                         ],
                       ),
                     ],
@@ -183,7 +151,7 @@ class _CalculatorState extends State<Calculator> {
                 crossAxisSpacing: 7.0,
                 mainAxisSpacing: 7.0,
                 children: [
-                  myButton(color: Colors.black87, text: 'AC'),
+                  myButton(color: Theme.of(context).buttonColor, text: 'AC'),
                   myButton(color: Colors.blueGrey, text: '( )'),
                   myButton(color: Colors.blueGrey, text: '%'),
                   myButton(color: Colors.blueGrey, text: '÷'),
@@ -201,7 +169,7 @@ class _CalculatorState extends State<Calculator> {
                   myButton(color: Colors.blueGrey, text: '+'),
                   myButton(color: Theme.of(context).primaryColor, text: 0),
                   myButton(color: Theme.of(context).primaryColor, text: '⋅'),
-                  myButton(color: Colors.black87, text: '⌫'),
+                  myButton(color: Theme.of(context).buttonColor, text: '⌫'),
                   myButton(color: Colors.redAccent, text: '='),
                 ],
               ),
