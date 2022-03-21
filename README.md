@@ -1,6 +1,8 @@
 # flutter_calculator
+![Samsung S9 Mockup](https://user-images.githubusercontent.com/44511437/159244149-9027b3c3-a10e-4be7-a431-3787b6547596.png)
 
-A new Flutter project.
+
+A simple calculator app made with flutter which supports both dark and light themes.
 
 ## Getting Started
 
