@@ -90,6 +90,7 @@ class _CalculatorState extends State<Calculator> {
     });
   }
 
+
   Widget myButton({color, text}) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
@@ -101,7 +102,7 @@ class _CalculatorState extends State<Calculator> {
       ),
       child: Text(
         text.toString(),
-        style: const TextStyle(fontSize: 30.0),
+        style: TextStyle(fontSize: 30.0,color: ((AdaptiveTheme.of(context).mode == AdaptiveThemeMode.light)&&([0,1,2,3,4,5,6,7,8,9,'.'].contains(text)))?const Color(0xff1c313a):null),
       ),
       onPressed: () => buttonPressed(text.toString()),
     );
