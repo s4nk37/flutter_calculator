@@ -56,11 +56,37 @@ class _CalculatorState extends State<Calculator> {
   String result = "0";
   String expression = "";
 
+  brackets(){
+    List<String> equationls = equation.split('').toList();
+    int countbr = 0;
+    int countcbr = 0;
+    if (equation.contains("(") || equation.contains(")")) {
+      for (int i = 0; i < equationls.length; i++) {
+        if (equationls[i] == '(') {
+          countbr++;
+        } else if (equationls[i] == ')') {
+          countcbr++;
+        }
+      }
+      if (countbr == countcbr) {
+        equation += '(';
+      } else {
+        equation += ')';
+      }
+    } else if (int.parse(equation) == 0){
+      equation = '(';
+    }else{
+      equation+='(';
+    }
+  }
+
   buttonPressed(String buttonText) {
     setState(() {
       if (buttonText == "AC") {
         equation = "0";
         result = "0";
+      } else if (buttonText == "( )") {
+        brackets();
       } else if (buttonText == "⌫") {
         equation = equation.substring(0, equation.length - 1);
         if (equation == "") {
@@ -90,7 +116,6 @@ class _CalculatorState extends State<Calculator> {
     });
   }
 
-
   Widget myButton({color, text}) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
@@ -102,7 +127,13 @@ class _CalculatorState extends State<Calculator> {
       ),
       child: Text(
         text.toString(),
-        style: TextStyle(fontSize: 30.0,color: ((AdaptiveTheme.of(context).mode == AdaptiveThemeMode.light)&&([0,1,2,3,4,5,6,7,8,9,'.'].contains(text)))?const Color(0xff1c313a):null),
+        style: TextStyle(
+            fontSize: 30.0,
+            color:
+                ((AdaptiveTheme.of(context).mode == AdaptiveThemeMode.light) &&
+                        ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, '.'].contains(text)))
+                    ? const Color(0xff1c313a)
+                    : null),
       ),
       onPressed: () => buttonPressed(text.toString()),
     );
@@ -160,25 +191,28 @@ class _CalculatorState extends State<Calculator> {
                         height: 200,
                         color: Colors.transparent,
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            equation,
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayMedium
-                                ?.copyWith(fontSize: 45.0),
-                          ),
-                          Text(
-                            result,
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayLarge
-                                ?.copyWith(fontSize: 65.0),
-                          ),
-                        ],
+                      SingleChildScrollView(
+                        reverse: true,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              equation,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium
+                                  ?.copyWith(fontSize: 45.0),
+                            ),
+                            Text(
+                              result,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge
+                                  ?.copyWith(fontSize: 65.0),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
