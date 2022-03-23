@@ -76,7 +76,7 @@ class _CalculatorState extends State<Calculator> {
     } else if (int.parse(equation) == 0){
       equation = '(';
     }else{
-      equation+='(';
+      equation +='(';
     }
   }
 
