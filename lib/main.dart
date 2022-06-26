@@ -12,7 +12,6 @@ void main() {
   runApp(const MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
@@ -64,7 +63,7 @@ class _CalculatorState extends State<Calculator> {
   String result = "0";
   String expression = "";
 
-  brackets(){
+  brackets() {
     List<String> equationls = equation.split('').toList();
     int countbr = 0;
     int countcbr = 0;
@@ -81,10 +80,10 @@ class _CalculatorState extends State<Calculator> {
       } else {
         equation += ')';
       }
-    } else if (int.parse(equation) == 0){
+    } else if (int.parse(equation) == 0) {
       equation = '(';
-    }else{
-      equation +='(';
+    } else {
+      equation += '(';
     }
   }
 
@@ -136,7 +135,7 @@ class _CalculatorState extends State<Calculator> {
       child: Text(
         text.toString(),
         style: TextStyle(
-            fontSize: Responsive.isTablet(context)?33.0 : 23.0,
+            fontSize: Responsive.isTablet(context) ? 33.0 : 23.0,
             color:
                 ((AdaptiveTheme.of(context).mode == AdaptiveThemeMode.light) &&
                         ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, '.'].contains(text)))
@@ -148,7 +147,6 @@ class _CalculatorState extends State<Calculator> {
   }
 
   @override
-
   Widget build(BuildContext context) {
     print(context);
     print(MediaQuery.of(context).size);
@@ -189,14 +187,16 @@ class _CalculatorState extends State<Calculator> {
         ],
       ),
       body: Container(
-        padding: Responsive.isTablet(context)? const EdgeInsets.fromLTRB(100.0, 0.0, 100.0, 20.0) :const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
-       //  padding: const EdgeInsets.fromLTRB(40.0, 135.0, 40.0, 0.0),
+        padding: Responsive.isTablet(context)
+            ? (_size.width>1000?const EdgeInsets.fromLTRB(385.0, 0.0, 385 .0, 10.0):const EdgeInsets.fromLTRB(100.0, 0.0, 100.0, 20.0))
+            : const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
+        //  padding: const EdgeInsets.fromLTRB(40.0, 135.0, 40.0, 0.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-                flex: Responsive.isTablet(context)? 30 : 25,
+                flex: Responsive.isTablet(context) ? 30 : 25,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                   child: Stack(
@@ -217,14 +217,20 @@ class _CalculatorState extends State<Calculator> {
                               style: Theme.of(context)
                                   .textTheme
                                   .displayMedium
-                                  ?.copyWith(fontSize: Responsive.isTablet(context)? 43.0 :27.0),
+                                  ?.copyWith(
+                                      fontSize: Responsive.isTablet(context)
+                                          ? 43.0
+                                          : 27.0),
                             ),
                             Text(
                               result,
                               style: Theme.of(context)
                                   .textTheme
                                   .displayLarge
-                                  ?.copyWith(fontSize: Responsive.isTablet(context)? 53.0 :37.0),
+                                  ?.copyWith(
+                                      fontSize: Responsive.isTablet(context)
+                                          ? 53.0
+                                          : 37.0),
                             ),
                           ],
                         ),
@@ -233,34 +239,36 @@ class _CalculatorState extends State<Calculator> {
                   ),
                 )),
             Expanded(
-                flex: Responsive.isTablet(context)? 85 : (_size.height>820.00?50:83),
-                child: GridView.count(
-                  crossAxisCount: Responsive.isTablet(context)? 4 : 4,
-                  crossAxisSpacing: Responsive.isTablet(context)? 20.0 : 7.0,
-                  mainAxisSpacing: Responsive.isTablet(context)? 20.0 : 7.0,
-                  children: [
-                    myButton(color: Theme.of(context).buttonColor, text: 'AC'),
-                    myButton(color: Colors.blueGrey, text: '( )'),
-                    myButton(color: Colors.blueGrey, text: '%'),
-                    myButton(color: Colors.blueGrey, text: '÷'),
-                    myButton(color: Theme.of(context).primaryColor, text: 7),
-                    myButton(color: Theme.of(context).primaryColor, text: 8),
-                    myButton(color: Theme.of(context).primaryColor, text: 9),
-                    myButton(color: Colors.blueGrey, text: '×'),
-                    myButton(color: Theme.of(context).primaryColor, text: 4),
-                    myButton(color: Theme.of(context).primaryColor, text: 5),
-                    myButton(color: Theme.of(context).primaryColor, text: 6),
-                    myButton(color: Colors.blueGrey, text: '-'),
-                    myButton(color: Theme.of(context).primaryColor, text: 1),
-                    myButton(color: Theme.of(context).primaryColor, text: 2),
-                    myButton(color: Theme.of(context).primaryColor, text: 3),
-                    myButton(color: Colors.blueGrey, text: '+'),
-                    myButton(color: Theme.of(context).primaryColor, text: 0),
-                    myButton(color: Theme.of(context).primaryColor, text: '.'),
-                    myButton(color: Theme.of(context).buttonColor, text: '⌫'),
-                    myButton(color: Colors.redAccent, text: '='),
-                  ],
-                ),
+              flex: Responsive.isTablet(context)
+                  ? 85
+                  : (_size.height > 820.00 ? 50 : 83),
+              child: GridView.count(
+                crossAxisCount: Responsive.isTablet(context) ? 4 : 4,
+                crossAxisSpacing: Responsive.isTablet(context) ? 20.0 : 7.0,
+                mainAxisSpacing: Responsive.isTablet(context) ? 20.0 : 7.0,
+                children: [
+                  myButton(color: Theme.of(context).buttonColor, text: 'AC'),
+                  myButton(color: Colors.blueGrey, text: '( )'),
+                  myButton(color: Colors.blueGrey, text: '%'),
+                  myButton(color: Colors.blueGrey, text: '÷'),
+                  myButton(color: Theme.of(context).primaryColor, text: 7),
+                  myButton(color: Theme.of(context).primaryColor, text: 8),
+                  myButton(color: Theme.of(context).primaryColor, text: 9),
+                  myButton(color: Colors.blueGrey, text: '×'),
+                  myButton(color: Theme.of(context).primaryColor, text: 4),
+                  myButton(color: Theme.of(context).primaryColor, text: 5),
+                  myButton(color: Theme.of(context).primaryColor, text: 6),
+                  myButton(color: Colors.blueGrey, text: '-'),
+                  myButton(color: Theme.of(context).primaryColor, text: 1),
+                  myButton(color: Theme.of(context).primaryColor, text: 2),
+                  myButton(color: Theme.of(context).primaryColor, text: 3),
+                  myButton(color: Colors.blueGrey, text: '+'),
+                  myButton(color: Theme.of(context).primaryColor, text: 0),
+                  myButton(color: Theme.of(context).primaryColor, text: '.'),
+                  myButton(color: Theme.of(context).buttonColor, text: '⌫'),
+                  myButton(color: Colors.redAccent, text: '='),
+                ],
+              ),
             ),
           ],
         ),
