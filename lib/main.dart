@@ -153,6 +153,8 @@ class _CalculatorState extends State<Calculator> {
     print(Responsive.isTablet(context));
     //screen size
     Size _size = MediaQuery.of(context).size;
+    double a = _size.width/8;
+    double b = _size.height/3;
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -188,7 +190,7 @@ class _CalculatorState extends State<Calculator> {
       ),
       body: Container(
         padding: Responsive.isTablet(context)
-            ? (_size.width>1000?const EdgeInsets.fromLTRB(385.0, 0.0, 385 .0, 10.0):const EdgeInsets.fromLTRB(100.0, 0.0, 100.0, 20.0))
+            ? (_size.width>1000?const EdgeInsets.fromLTRB(385.0, 0.0, 385.0, 10.0): EdgeInsets.fromLTRB( a , 0.0, a, 20.0))
             : const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
         //  padding: const EdgeInsets.fromLTRB(40.0, 135.0, 40.0, 0.0),
         child: Column(
@@ -241,9 +243,9 @@ class _CalculatorState extends State<Calculator> {
             Expanded(
               flex: Responsive.isTablet(context)
                   ? 85
-                  : (_size.height > 820.00 ? 50 : 83),
+                  : (_size.height > 790.00 ? 50 : 83),
               child: GridView.count(
-                crossAxisCount: Responsive.isTablet(context) ? 4 : 4,
+                crossAxisCount: 4,
                 crossAxisSpacing: Responsive.isTablet(context) ? 20.0 : 7.0,
                 mainAxisSpacing: Responsive.isTablet(context) ? 20.0 : 7.0,
                 children: [
