@@ -148,7 +148,6 @@ class _CalculatorState extends State<Calculator> {
 
   @override
   Widget build(BuildContext context) {
-    print(context);
     print(MediaQuery.of(context).size);
     print(Responsive.isTablet(context));
     //screen size
