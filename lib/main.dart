@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:math_expressions/math_expressions.dart';
-import 'package:flutter_calculator/responsive.dart';
+import 'responsive.dart';
+import 'theme.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,28 +18,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AdaptiveTheme(
-      light: ThemeData(
-        brightness: Brightness.light,
-        primaryColor: Colors.greenAccent,
-        backgroundColor: const Color(0xffe5e5e5),
-        buttonColor: Colors.black87,
-        textTheme: const TextTheme(
-          titleMedium: TextStyle(color: Colors.black87),
-          displayMedium: TextStyle(color: Colors.black54),
-          displayLarge: TextStyle(color: Colors.black87),
-        ),
-      ),
-      dark: ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: const Color(0xff2bbd7e),
-        backgroundColor: const Color(0xff121212),
-        buttonColor: Colors.white24,
-        textTheme: const TextTheme(
-          titleMedium: TextStyle(color: Colors.white70),
-          displayMedium: TextStyle(color: Colors.white54),
-          displayLarge: TextStyle(color: Colors.white70),
-        ),
-      ),
+      light: lightTheme,
+      dark: darkTheme,
       initial: AdaptiveThemeMode.system,
       builder: (theme, darkTheme) => MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -148,12 +129,9 @@ class _CalculatorState extends State<Calculator> {
 
   @override
   Widget build(BuildContext context) {
-    // print(MediaQuery.of(context).size);
-    // print(Responsive.isTablet(context));
-    //screen size
     Size _size = MediaQuery.of(context).size;
     double a = _size.width / 8;
-    double b = _size.height / 3;
+    // double b = _size.height / 3;
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -166,7 +144,7 @@ class _CalculatorState extends State<Calculator> {
         title: Text(
           'Calculator',
           style:
-              Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 20.0),
+              Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 20.0),
         ),
         actions: [
           Padding(
